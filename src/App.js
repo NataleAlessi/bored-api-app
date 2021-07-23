@@ -1,24 +1,44 @@
-import logo from './logo.svg';
-import './App.css';
+import { useState, useEffect } from 'react';
+import axios from 'axios';
+import { 
+  Box, 
+  Grommet, 
+  ResponsiveContext 
+} from 'grommet';
+
+const theme = {
+  global: {
+    font: {
+      family: 'Roboto',
+      size: '18px',
+      height: '20px',
+    },
+  },
+};
 
 function App() {
+  const [boredData, setBoredData] = useState([]);
+  /* let response = useEffect(() => {
+      response = axios.get('https://www.boredapi.com/api/activity')
+    }, []);
+
+  setBoredData(response.data);
+  console.log(boredData); */
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Grommet theme={theme} full /* themeMode='dark' */>
+      <ResponsiveContext.Consumer>
+        {size => (
+          <Box fill>
+            <Box direction='row' flex overflow={{ horizontal: 'hidden' }}>
+              <Box flex align='center' justify='center'>
+                app body
+              </Box>
+            </Box>
+          </Box>
+          )
+        }
+      </ResponsiveContext.Consumer>
+    </Grommet>
   );
 }
 
