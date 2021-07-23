@@ -16,22 +16,46 @@ const theme = {
   },
 };
 
-function App() {
-  const [boredData, setBoredData] = useState([]);
-  /* let response = useEffect(() => {
-      response = axios.get('https://www.boredapi.com/api/activity')
-    }, []);
+const api = axios.create({
+  baseURL: 'https://www.boredapi.com/api/activity',
+  headers: {
+    "Content-type": "application/json"
+  }
+})
 
-  setBoredData(response.data);
-  console.log(boredData); */
+function App() {
+  const [boredData, setBoredData] = useState({});
+  
+  useEffect(() => {
+    api.get().then(
+      res => {
+        setBoredData(res.data);
+        console.log(res.data);
+      }
+    )
+    .catch(e => {
+      HTMLFormControlsCollection.log(e)
+    })
+  }, [])
+  
   return (
     <Grommet theme={theme} full /* themeMode='dark' */>
       <ResponsiveContext.Consumer>
         {size => (
           <Box fill>
-            <Box direction='row' flex overflow={{ horizontal: 'hidden' }}>
+            <Box direction='row' flex /* overflow={{ horizontal: 'hidden' }} */>
               <Box flex align='center' justify='center'>
-                app body
+                {boredData.activity}<br/>
+                {boredData.type}<br/>
+                {boredData.participants}<br/>
+                {boredData.price}<br/>
+                {boredData.accessibility}<br/>
+
+                {boredData.link
+                  ? boredData.link
+                  : "no link avalaible"
+                }
+
               </Box>
             </Box>
           </Box>
